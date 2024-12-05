@@ -28,13 +28,11 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
+app.UseHttpsRedirection();//瀏覽http->自動https
+app.UseStaticFiles();//靜態文件存放資料夾，預設www.root
+app.UseRouting();//啟用URL Routing
+app.UseAuthorization();//授權  身分驗證後->授權
+//可裝中間層驗證更多東西app.UseMiddleware<>{ }
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
