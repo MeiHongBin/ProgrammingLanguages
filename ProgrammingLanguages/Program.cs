@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using ProgrammingLanguages.Data;
+using ProgrammingLanguages.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+var LanguageProjectconnectionString = 
+    builder.Configuration.GetConnectionString("LanguageProject") ?? throw new InvalidOperationException("Connection string 'LanguageProject' not found.");
+builder.Services.AddDbContext<LanguageProjectContext>(Options => Options.UseSqlServer(LanguageProjectconnectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
