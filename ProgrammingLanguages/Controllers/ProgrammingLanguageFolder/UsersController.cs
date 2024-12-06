@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProgrammingLanguages.Models;
+using ProgrammingLanguages.ProgrammingLanguageModels;
 
-namespace ProgrammingLanguages.Controllers
+namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder
 {
     public class UsersController : Controller
     {

@@ -1,0 +1,60 @@
+﻿@model ProgrammingLanguages.ProgrammingLanguageModels.LanguageVersion
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>LanguageVersion</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VersionName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VersionName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Changes)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Changes)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Lv1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Lv1)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Lv2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Lv2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Lv3)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Lv3)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Language)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Language.LanguageId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.VersionId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

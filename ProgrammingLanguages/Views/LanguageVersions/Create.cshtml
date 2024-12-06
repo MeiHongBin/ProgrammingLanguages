@@ -1,0 +1,62 @@
+﻿@model ProgrammingLanguages.ProgrammingLanguageModels.LanguageVersion
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>LanguageVersion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="LanguageId" class="control-label"></label>
+                <select asp-for="LanguageId" class ="form-control" asp-items="ViewBag.LanguageId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="VersionName" class="control-label"></label>
+                <input asp-for="VersionName" class="form-control" />
+                <span asp-validation-for="VersionName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReleaseDate" class="control-label"></label>
+                <input asp-for="ReleaseDate" class="form-control" />
+                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Changes" class="control-label"></label>
+                <input asp-for="Changes" class="form-control" />
+                <span asp-validation-for="Changes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lv1" class="control-label"></label>
+                <input asp-for="Lv1" class="form-control" />
+                <span asp-validation-for="Lv1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lv2" class="control-label"></label>
+                <input asp-for="Lv2" class="form-control" />
+                <span asp-validation-for="Lv2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lv3" class="control-label"></label>
+                <input asp-for="Lv3" class="form-control" />
+                <span asp-validation-for="Lv3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

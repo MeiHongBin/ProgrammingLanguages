@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ProgrammingLanguages.Models;
+namespace ProgrammingLanguages.ProgrammingLanguageModels;
 
 public partial class ProgrammingLanguageFeature
 {

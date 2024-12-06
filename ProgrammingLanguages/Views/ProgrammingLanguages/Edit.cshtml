@@ -1,0 +1,74 @@
+﻿@model ProgrammingLanguages.ProgrammingLanguageModels.ProgrammingLanguage
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ProgrammingLanguage</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="LanguageId" />
+            <div class="form-group">
+                <label asp-for="LanguageName" class="control-label"></label>
+                <input asp-for="LanguageName" class="form-control" />
+                <span asp-validation-for="LanguageName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedYear" class="control-label"></label>
+                <input asp-for="CreatedYear" class="form-control" />
+                <span asp-validation-for="CreatedYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Creator" class="control-label"></label>
+                <input asp-for="Creator" class="form-control" />
+                <span asp-validation-for="Creator" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Paradigm" class="control-label"></label>
+                <input asp-for="Paradigm" class="form-control" />
+                <span asp-validation-for="Paradigm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OfficialWebsite" class="control-label"></label>
+                <input asp-for="OfficialWebsite" class="form-control" />
+                <span asp-validation-for="OfficialWebsite" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="L1" class="control-label"></label>
+                <input asp-for="L1" class="form-control" />
+                <span asp-validation-for="L1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="L2" class="control-label"></label>
+                <input asp-for="L2" class="form-control" />
+                <span asp-validation-for="L2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="L3" class="control-label"></label>
+                <input asp-for="L3" class="form-control" />
+                <span asp-validation-for="L3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

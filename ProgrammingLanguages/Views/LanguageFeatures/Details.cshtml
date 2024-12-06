@@ -1,0 +1,48 @@
+﻿@model ProgrammingLanguages.ProgrammingLanguageModels.LanguageFeature
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>LanguageFeature</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FeatureName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FeatureName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.F1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.F1)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.F2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.F2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.F3)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.F3)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.FeatureId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

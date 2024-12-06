@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ProgrammingLanguages.ProgrammingLanguageModels.LearningProgress>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProficiencyLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LearningHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Certification)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastUpdated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lp1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lp2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lp3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Language)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProficiencyLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LearningHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Certification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lp1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lp2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lp3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Language.LanguageId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProgressId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProgressId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProgressId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

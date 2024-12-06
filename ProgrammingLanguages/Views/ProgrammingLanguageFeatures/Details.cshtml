@@ -1,0 +1,48 @@
+﻿@model ProgrammingLanguages.ProgrammingLanguageModels.ProgrammingLanguageFeature
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ProgrammingLanguageFeature</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Pf1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Pf1)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Pf2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Pf2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Pf3)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Pf3)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Feature)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Feature.FeatureId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Language)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Language.LanguageId)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
