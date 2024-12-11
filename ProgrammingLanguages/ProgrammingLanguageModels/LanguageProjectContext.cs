@@ -30,9 +30,10 @@ public partial class LanguageProjectContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=LanguageProject;Integrated Security=True;Encrypt=true;TrustServerCertificate=true");
+    public virtual DbSet<Form_order> FormOrders { get; set; }
+    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+    //        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=LanguageProject;Integrated Security=True;Encrypt=true;TrustServerCertificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -184,6 +185,15 @@ public partial class LanguageProjectContext : DbContext
             entity.Property(e => e.UserName).HasMaxLength(100);
         });
 
+        modelBuilder.Entity<Form_order>(entity => {
+            entity.HasKey(e => e.FormId).HasName("PK__Form_orders__m");
+
+            entity.Property(e => e.FormId).HasColumnName("FormId");
+            entity.Property(e => e.FormName).HasMaxLength(200);
+            entity.Property(e => e.FormOrder).HasMaxLength(200);
+        });
+        //Add-Migration AddCourseTable -Context LanguageProjectContext 生成一個遷移檔案，其中包含 Form_order 資料表的建立 SQL 語句。
+        //Update-Database -Context LanguageProjectContext 更新資料庫
         OnModelCreatingPartial(modelBuilder);
     }
 
