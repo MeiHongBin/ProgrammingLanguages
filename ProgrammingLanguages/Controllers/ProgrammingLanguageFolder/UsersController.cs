@@ -46,6 +46,7 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder
         // GET: Users/Create
         public IActionResult Create()
         {
+            ViewBag.User = new User();
             return View();
         }
 
