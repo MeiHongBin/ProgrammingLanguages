@@ -79,6 +79,7 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder
             {
                 return NotFound();
             }
+            ViewBag.UserE = user;
             return View(user);
         }
 
