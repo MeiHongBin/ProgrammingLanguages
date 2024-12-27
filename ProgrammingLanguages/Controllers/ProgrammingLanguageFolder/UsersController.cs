@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ProgrammingLanguages.Fillter_test;
 using ProgrammingLanguages.Models;
 using ProgrammingLanguages.ProgrammingLanguageModels;
 
@@ -12,6 +13,7 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder
 {
     public class UsersController : Controller
     {
+        
         private readonly LanguageProjectContext _context;
 
         public UsersController(LanguageProjectContext context)
@@ -20,6 +22,7 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder
         }
 
         // GET: Users
+        [LogExecutionTime]//自訂義filter:耗用時間測量
         public async Task<IActionResult> Index()
         {
             return View(await _context.Users.ToListAsync());

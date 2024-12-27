@@ -14,7 +14,7 @@
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context)//InvokeAsync:叫用HttpContext檢視元件。
         {
             var startTime = DateTime.UtcNow;
 
