@@ -15,6 +15,16 @@ var LanguageProjectconnectionString =
 //新增至DI容器內
 builder.Services.AddDbContext<ApplicationDbContext>(options =>options.UseSqlServer(connectionString));
 builder.Services.AddDbContext<LanguageProjectContext>(Options => Options.UseSqlServer(LanguageProjectconnectionString));
+//註冊必需的服務，包括驗證（Authentication）和授權（Authorization）
+//builder.Services.AddAuthentication("Cookies")
+//    .AddCookie(options =>
+//    {
+//        options.LoginPath = "/Account/Login"; // 登入頁面
+//        options.LogoutPath = "/Account/Logout"; // 登出頁面
+//        options.AccessDeniedPath = "/Account/AccessDenied"; // 無權限頁面
+//    });
+//builder.Services.AddAuthorization();
+
 
 //這會擷取可使用 Entity Framework 移轉解析的資料庫相關例外狀況。 發生這些例外狀況時，會產生 HTML 回應，其中包含可能解決問題的動作詳細資料。
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

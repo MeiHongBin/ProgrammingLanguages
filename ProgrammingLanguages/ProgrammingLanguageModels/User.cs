@@ -11,8 +11,9 @@ public partial class User
     public string UserName { get; set; } = null!;
     [Display(Name = "郵件地址")]
     public string Email { get; set; } = null!;
+    //DB有設定PasswordHash不允許null，若null會擲回例外
     [Display(Name = "密碼")]
-    public string? PasswordHash { get; set; }
+    public string PasswordHash { get; set; }
     [Display(Name = "註冊日期")]
     public DateTime? RegisterDate { get; set; }
     [Display(Name = "其他描述")]
