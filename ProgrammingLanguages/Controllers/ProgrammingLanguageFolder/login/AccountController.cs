@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using ProgrammingLanguages.Models;
 using System.Security.Claims;
+using ProgrammingLanguages.ProgrammingLanguageModels.LoginPartialVM;
 
 namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder.login
 {
@@ -35,6 +36,7 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder.login
                 //""：指定錯誤的鍵，這裡的空字串表示這是一個通用錯誤，而不是特定於某個欄位。
                 ModelState.AddModelError("", "無效的帳號或密碼");//將指定的 errorMessageErrors 加入至與指定 key 相關聯之 實例。
                 return View();
+
             }
 
             // 登入成功，建立身份驗證Claim
@@ -51,6 +53,35 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder.login
             await HttpContext.SignInAsync("Cookies", principal);
             return RedirectToAction("Index", "Home"); //重定向至Index
         }
+        [HttpPost]
+        public async Task<IActionResult> Login(string username, string password,Loginpartial model)
+        {
+            if (!ModelState.IsValid) return PartialView("_LoginForm", model);
+
+            var user = _context.Users.FirstOrDefault(u => u.UserName == model.UserName);
+            if (user == null || !VerifyPassword(model.Password, user.PasswordHash))
+            {
+                ModelState.AddModelError("", "帳號或密碼錯誤");
+                return PartialView("_LoginForm", model);
+            }
+            // 登入成功，建立身份驗證Claim
+            var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Email, user.Email)
+                };
+            var identity = new ClaimsIdentity(claims, "Cookies");//身分宣告，指定身份驗證類型為基於 Cookie 的身份驗證。
+            var principal = new ClaimsPrincipal(identity);//建立一個主體，表示當前的使用者，並將 ClaimsIdentity 附加到主體上。
+
+            //SignInAsync：將使用者的身份信息（principal）保存到伺服器的 HTTP 上下文中，並使用 Cookie 身份驗證。
+            //"Cookies"：指定身份驗證方案，與 ClaimsIdentity 中使用的方案一致。
+            await HttpContext.SignInAsync("Cookies", principal);
+            return RedirectToAction("Index", "Home");//重定向至Index
+        }
+
+
+
+
 
         [HttpPost]
         public async Task<IActionResult> Logout()
