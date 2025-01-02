@@ -45,6 +45,7 @@
                 加载中...
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary">更改密碼</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-primary" onclick="submitUserEForm()">儲存</button>
             </div>
@@ -62,7 +63,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th>
+            <th hidden>
                 @Html.DisplayNameFor(model => model.PasswordHash)
             </th>
             <th>
@@ -92,7 +93,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            <td>
+            <td hidden>
                 @Html.DisplayFor(modelItem => item.PasswordHash)
             </td>
             <td>
@@ -115,7 +116,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#UserEditModal" data-userid="@item.UserId">
                     編輯
                 </button>
-                <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
+@*                 <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> | *@
                 @* 直接傳遞模型+id，而非單純傳送表單 *@
                 <form id="deleteForm" asp-action="Delete" method="post">
                     @Html.AntiForgeryToken()
@@ -130,6 +131,8 @@
 @section Scripts {
     <script>
     @*這裡有用很神奇的方法*@
+    @*使用bs自帶的功能show.bs.modal*@
+    @*取得userid後執行jq的ajax請求*@
     document.addEventListener("DOMContentLoaded", function () {
         $('#UserEditModal').on('show.bs.modal', function (event) {
             const button = $(event.relatedTarget);
