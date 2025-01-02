@@ -32,26 +32,25 @@
     </div>
 </div>
 <!-- 編輯 -->
-@* <div class="modal fade" id="UserEditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalLabel" aria-hidden="true">
+<div class="modal fade" id="UserEditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="EditModalLabel">新增使用者</h5>
+                <h5 class="modal-title" id="EditModalLabel">編輯使用者</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <partial name="~/Views/Users/_UserEPartial.cshtml" model="ViewBag.User ?? new ProgrammingLanguages.ProgrammingLanguageModels.User()" />
+            <div class="modal-body" id="modalBodyContent">
+                加载中...
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="submitUserForm()">儲存</button>
+                <button type="button" class="btn btn-primary" onclick="submitUserEForm()">儲存</button>
             </div>
         </div>
     </div>
-</div> *@
-<!-- 刪除 -->
+</div>
 
 
 <table class="table">
@@ -112,17 +111,16 @@
                 @Html.DisplayFor(modelItem => item.Us3)
             </td> *@
             <td>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#UserEditModal">
+                @*這裡有用很神奇的方法*@
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#UserEditModal" data-userid="@item.UserId">
                     編輯
                 </button>
                 <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                @* <a asp-action="Details" asp-route-id="@item.UserId">Details</a> | *@
                 @* 直接傳遞模型+id，而非單純傳送表單 *@
                 <form id="deleteForm" asp-action="Delete" method="post">
                     @Html.AntiForgeryToken()
                     <input type="hidden" name="item.UserId" value="@item.UserId" />
                     <input type="submit" value="Delete" class="btn btn-danger"/>
-                    @* <input type="submit" value="Delete" class="btn btn-danger"/> *@
                 </form>
             </td>
         </tr>
@@ -131,6 +129,27 @@
 </table>
 @section Scripts {
     <script>
+    @*這裡有用很神奇的方法*@
+    document.addEventListener("DOMContentLoaded", function () {
+        $('#UserEditModal').on('show.bs.modal', function (event) {
+            const button = $(event.relatedTarget);
+            const userId = button.data('userid');
+
+            //發起 AJAX 請求，載入部分視圖
+            $.ajax({
+                url: '/Users/Edit/'+userId, //指向後端 Action 方法
+                method: 'GET',
+                success: function (html) {
+                    //取代網頁內容
+                    $('#modalBodyContent').html(html);
+                },
+                error: function () {
+                    $('#modalBodyContent').html('<p class="text-danger">加載失敗，請稍後再試。</p>');
+                }
+            });
+        });
+    });
+
         function submitUserCForm()
         {
             //提交 MVC 新增表單
@@ -145,27 +164,6 @@
             //提交 MVC 編輯表單
             document.getElementById("userEForm").submit();
         }
-        // 攔截表單提交
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("deleteForm").addEventListener("submit", function (event) {
-                console.log("submit成功");
-                event.preventDefault();
-                Swal.fire({
-                    title: '確定要刪除嗎？',
-                    text: "刪除後將無法恢復！",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: '是的，刪除！',
-                    cancelButtonText: '取消'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        event.target.submit();
-                    }
-                });
-            });
-        });
         // 如果刪除成功，顯示成功提示
         @if (TempData["DeleteSuccess"] != null)
         {

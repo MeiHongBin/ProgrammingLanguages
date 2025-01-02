@@ -91,7 +91,8 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder
                 return NotFound();
             }
             ViewBag.UserE = user;
-            return View(user);
+            return PartialView(user);
+            //View(user);
         }
 
         // POST: Users/Edit/5
@@ -130,6 +131,7 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder
         }
 
         // GET: Users/Delete/5
+        //棄用
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
