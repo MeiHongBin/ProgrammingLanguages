@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Scripting;
@@ -65,6 +66,10 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder
         {
             if (ModelState.IsValid)
             {
+                //加鹽傳送
+                string salt = BCrypt.Net.BCrypt.GenerateSalt();
+                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash, salt);
+
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -142,19 +147,45 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder
             return View(user);
         }
 
+        //// POST: Users/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    Console.WriteLine("id:" + id);
+        //    var user = await _context.Users.FindAsync(id);
+        //    Console.WriteLine("使用者:"+user);
+        //    if (user != null)
+        //    {
+        //        _context.Users.Remove(user);
+        //    }
+        //    //確認刪除成功
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //        Console.WriteLine("儲存變更成功");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"儲存失敗: {ex.Message}");
+        //    }
+
+        //    return RedirectToAction(nameof(Index));
+        //}
+
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult Delete([FromForm] ProgrammingLanguages.ProgrammingLanguageModels.User item)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = _context.Users.Find(item.UserId);
             if (user != null)
             {
                 _context.Users.Remove(user);
+                _context.SaveChanges();
+                TempData["DeleteSuccess"] = true; // 向前端傳遞刪除成功訊息(生命週期:request結束)
             }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
         private bool UserExists(int id)

@@ -25,7 +25,6 @@ builder.Services.AddDbContext<LanguageProjectContext>(Options => Options.UseSqlS
 //    });
 //builder.Services.AddAuthorization();
 
-
 //這會擷取可使用 Entity Framework 移轉解析的資料庫相關例外狀況。 發生這些例外狀況時，會產生 HTML 回應，其中包含可能解決問題的動作詳細資料。
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

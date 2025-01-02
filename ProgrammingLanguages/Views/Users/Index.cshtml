@@ -117,7 +117,12 @@
                 </button>
                 <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
                 @* <a asp-action="Details" asp-route-id="@item.UserId">Details</a> | *@
-                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
+                @* 直接傳遞模型+id，而非單純傳送表單 *@
+                <form asp-action="Delete" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="item.UserId" value="@item.UserId" />
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </form>
             </td>
         </tr>
 }
@@ -139,5 +144,38 @@
             //提交 MVC 編輯表單
             document.getElementById("userEForm").submit();
         }
+        // 攔截表單提交
+        document.getElementById("deleteForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // 阻止表單默認提交行為
+            // 顯示 SweetAlert2 確認框
+            Swal.fire({
+                title: '確定要刪除嗎？',
+                text: "刪除後將無法恢復！",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: '是的，刪除！',
+                cancelButtonText: '取消'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // 提交表單
+                    event.target.submit();
+                }
+            });
+        });
+        // 如果刪除成功，顯示成功提示
+        @if (TempData["DeleteSuccess"] != null)
+        {
+            <text>
+                Swal.fire({
+                    title: '刪除成功！',
+                    text: '該項目已成功刪除。',
+                    icon: 'success',
+                    confirmButtonText: '確定'
+                });
+            </text>
+        }
     </script>
 }
+
