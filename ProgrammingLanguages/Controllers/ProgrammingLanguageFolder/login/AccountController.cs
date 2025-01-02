@@ -80,9 +80,6 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder.login
         }
 
 
-
-
-
         [HttpPost]
         public async Task<IActionResult> Logout()
         {

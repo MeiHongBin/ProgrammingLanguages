@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#UserCreateModal" onclick="clearUserForm()">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#UserCreateModal" onclick="clearUserCForm()">
     新增
 </button>
 
@@ -26,13 +26,13 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="submitUserForm()">儲存</button>
+                <button type="button" class="btn btn-primary" onclick="submitUserCForm()">儲存</button>
             </div>
         </div>
     </div>
 </div>
 <!-- 編輯 -->
-<div class="modal fade" id="UserEditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalLabel" aria-hidden="true">
+@* <div class="modal fade" id="UserEditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> *@
 <!-- 刪除 -->
 
 
@@ -125,17 +125,17 @@
 </table>
 @section Scripts {
     <script>
-        function submitUserForm()
+        function submitUserCForm()
         {
             //提交 MVC 新增表單
-            document.getElementById("userForm").submit();
+            document.getElementById("userCForm").submit();
         }
-        function clearUserForm()
+        function clearUserCForm()
         {
             //清空 MVC 表單
-            document.getElementById("userForm").reset();
+            document.getElementById("userCForm").reset();
         }
-        function submitUserForm() {
+        function submitUserEForm() {
             //提交 MVC 編輯表單
             document.getElementById("userEForm").submit();
         }
