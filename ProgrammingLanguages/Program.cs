@@ -12,18 +12,19 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 var LanguageProjectconnectionString = 
     builder.Configuration.GetConnectionString("LanguageProject") ?? throw new InvalidOperationException("Connection string 'LanguageProject' not found.");
+
 //新增至DI容器內
 builder.Services.AddDbContext<ApplicationDbContext>(options =>options.UseSqlServer(connectionString));
 builder.Services.AddDbContext<LanguageProjectContext>(Options => Options.UseSqlServer(LanguageProjectconnectionString));
 //註冊必需的服務，包括驗證（Authentication）和授權（Authorization）
-//builder.Services.AddAuthentication("Cookies")
-//    .AddCookie(options =>
-//    {
-//        options.LoginPath = "/Account/Login"; // 登入頁面
-//        options.LogoutPath = "/Account/Logout"; // 登出頁面
-//        options.AccessDeniedPath = "/Account/AccessDenied"; // 無權限頁面
-//    });
-//builder.Services.AddAuthorization();
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login"; // 登入頁面
+        options.LogoutPath = "/Account/Logout"; // 登出頁面
+        //options.AccessDeniedPath = "/Account/AccessDenied"; // 無權限頁面
+    });
+builder.Services.AddAuthorization();
 
 //這會擷取可使用 Entity Framework 移轉解析的資料庫相關例外狀況。 發生這些例外狀況時，會產生 HTML 回應，其中包含可能解決問題的動作詳細資料。
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -55,7 +56,8 @@ else
 app.UseHttpsRedirection();//瀏覽http->自動https
 app.UseStaticFiles();//靜態文件存放資料夾，預設www.root
 app.UseRouting();//啟用URL Routing
-app.UseAuthorization();//授權  身分驗證後->授權
+app.UseAuthentication();//身分驗證
+app.UseAuthorization();//授權
 app.UseMiddleware<RequestTimingMiddleware>();//測試middleware用，位置:middleware_test\RequireRunning_time.cs
 //可裝中間層驗證更多東西app.UseMiddleware<>{ }
 app.MapControllerRoute(
