@@ -20,7 +20,8 @@ builder.Services.AddDbContext<LanguageProjectContext>(Options => Options.UseSqlS
 builder.Services.AddAuthentication("Cookies")
     .AddCookie(options =>
     {
-        options.LoginPath = "/Account/Login"; // 登入頁面
+        options.LoginPath = "/Home/Index"; // 頁面包含部分視圖
+        //options.LoginPath = "/Login/_LoginPartial"; // 登入頁面
         options.LogoutPath = "/Account/Logout"; // 登出頁面
         //options.AccessDeniedPath = "/Account/AccessDenied"; // 無權限頁面
     });
@@ -59,6 +60,7 @@ app.UseRouting();//啟用URL Routing
 app.UseAuthentication();//身分驗證
 app.UseAuthorization();//授權
 app.UseMiddleware<RequestTimingMiddleware>();//測試middleware用，位置:middleware_test\RequireRunning_time.cs
+app.UseMiddleware<UserLoginMonitoringMiddleware>();//測試是否驗證成功
 //可裝中間層驗證更多東西app.UseMiddleware<>{ }
 app.MapControllerRoute(
     name: "default",

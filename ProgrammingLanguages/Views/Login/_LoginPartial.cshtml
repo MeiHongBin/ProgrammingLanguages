@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 
-@* @inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager *@
+@* @inject SignInManager<IdentityUser> SignInManager *@
+@inject UserManager<IdentityUser> UserManager
 
 
 @{
@@ -11,7 +11,7 @@
 
 
 <!-- Topbar Navbar -->
-<ul class="navbar-nav ml-auto" id="topbar-login-partial">
+<ul class="navbar-nav ml-auto">
     <!-- Nav Item - User Information -->
     <li class="nav-item dropdown no-arrow">
         @if (User.Identity.IsAuthenticated)
@@ -63,37 +63,3 @@
     </li>
 </ul>
 
-@section Scripts{
-    <script>
-        function refreshLoginPartial() {
-            $.ajax({
-                url: '/Account/LoginPartial', // Controller 的 Action 路徑
-                method: 'GET',
-                success: function (result) {
-                    $('#topbar-login-partial').html(result); // 更新指定區域
-                },
-                error: function () {
-                    console.error('無法刷新登入 Partial View');
-                }
-            });
-        }
-
-        // 登入成功後呼叫這個函數
-        $('form[asp-action="Login"]').on('submit', function (e) {
-            e.preventDefault(); // 防止頁面重載
-            var form = $(this);
-            $.ajax({
-                url: form.attr('action'),
-                method: form.attr('method'),
-                data: form.serialize(),
-                success: function () {
-                    refreshLoginPartial(); // 更新部分 View
-                },
-                error: function () {
-                    alert('登入失敗');
-                }
-            });
-        });
-    </script>
-
-}

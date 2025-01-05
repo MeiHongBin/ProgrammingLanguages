@@ -42,7 +42,6 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder.login
             }
             ViewData["SignInManager"] = _signInManager;
             // 登入成功，建立身份驗證Claim
-            ViewData["UserName"] = username;
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName),
@@ -53,7 +52,26 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder.login
 
             //SignInAsync：將使用者的身份信息（principal）保存到伺服器的 HTTP 上下文中，並使用 Cookie 身份驗證。
             //"Cookies"：指定身份驗證方案，與 ClaimsIdentity 中使用的方案一致。
-            await HttpContext.SignInAsync("Cookies", principal);
+            try
+            {
+                await HttpContext.SignInAsync("Cookies", principal);
+                Console.WriteLine("Cookie 已成功寫入");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"SignInAsync 失敗: {ex.Message}");
+            }
+            if (User.Identity.IsAuthenticated)
+            {
+                Console.WriteLine($"用戶已驗證，名稱：{User.Identity.Name}");
+            }
+            else
+            {
+                Console.WriteLine("用戶未驗證");
+            }
+
+            //await HttpContext.SignInAsync("Cookies", principal);
+            //Console.WriteLine("登入成功");
             return RedirectToAction("Index", "Home"); //重定向至Index
         }
 
@@ -67,12 +85,6 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder.login
             return NoContent();
             //return View();
         }
-
-        public IActionResult LoginPartial()
-        {
-            return PartialView("_LoginPartial");
-        }
-
 
         //密碼驗證(僅使用，未了解)
         private bool VerifyPassword(string password, string hashedPassword)
