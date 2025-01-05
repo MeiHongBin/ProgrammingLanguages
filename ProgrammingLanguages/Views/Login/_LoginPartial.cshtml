@@ -1,18 +1,24 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
 @* @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager *@
 
+
+@{
+    var signInManager = (SignInManager<IdentityUser>)ViewData["SignInManager"];
+}
+
+
 <!-- Topbar Navbar -->
-<ul class="navbar-nav ml-auto">
+<ul class="navbar-nav ml-auto" id="topbar-login-partial">
     <!-- Nav Item - User Information -->
     <li class="nav-item dropdown no-arrow">
-        @if (SignInManager.IsSignedIn(User))
+        @if (User.Identity.IsAuthenticated)
         {
             <a class="nav-link dropdown-toggle" href="#" id="UserLoginDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@User.UserName</span>
-@*                 <img class="img-profile rounded-circle"
-                     src="img/undraw_profile.svg"> *@
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@User.Identity.Name</span>
             </a>
         }
         else
@@ -20,10 +26,9 @@
             <a class="nav-link dropdown-toggle" href="#" id="UserLoginDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">請登入</span>
-@*                 <img class="img-profile rounded-circle"
-                     src="img/undraw_profile.svg"> *@
             </a>
         }
+
         <!-- Dropdown - User Information -->
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
              aria-labelledby="UserLoginDropdown">
@@ -58,4 +63,37 @@
     </li>
 </ul>
 
+@section Scripts{
+    <script>
+        function refreshLoginPartial() {
+            $.ajax({
+                url: '/Account/LoginPartial', // Controller 的 Action 路徑
+                method: 'GET',
+                success: function (result) {
+                    $('#topbar-login-partial').html(result); // 更新指定區域
+                },
+                error: function () {
+                    console.error('無法刷新登入 Partial View');
+                }
+            });
+        }
 
+        // 登入成功後呼叫這個函數
+        $('form[asp-action="Login"]').on('submit', function (e) {
+            e.preventDefault(); // 防止頁面重載
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                method: form.attr('method'),
+                data: form.serialize(),
+                success: function () {
+                    refreshLoginPartial(); // 更新部分 View
+                },
+                error: function () {
+                    alert('登入失敗');
+                }
+            });
+        });
+    </script>
+
+}

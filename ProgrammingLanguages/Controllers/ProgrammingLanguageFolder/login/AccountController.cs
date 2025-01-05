@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using ProgrammingLanguages.Models;
 using System.Security.Claims;
 using ProgrammingLanguages.ProgrammingLanguageModels.LoginPartialVM;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder.login
 {
@@ -12,10 +13,12 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder.login
     {
         //DI容器
         private readonly LanguageProjectContext _context;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AccountController(LanguageProjectContext context)
+        public AccountController(LanguageProjectContext context, SignInManager<IdentityUser> signInManager)
         {
             _context = context;
+            _signInManager = signInManager;
         }
 
         //登入頁面
@@ -37,7 +40,9 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder.login
                 ModelState.AddModelError("", "無效的帳號或密碼");//將指定的 errorMessageErrors 加入至與指定 key 相關聯之 實例。
                 return View();
             }
+            ViewData["SignInManager"] = _signInManager;
             // 登入成功，建立身份驗證Claim
+            ViewData["UserName"] = username;
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName),
@@ -62,6 +67,13 @@ namespace ProgrammingLanguages.Controllers.ProgrammingLanguageFolder.login
             return NoContent();
             //return View();
         }
+
+        public IActionResult LoginPartial()
+        {
+            return PartialView("_LoginPartial");
+        }
+
+
         //密碼驗證(僅使用，未了解)
         private bool VerifyPassword(string password, string hashedPassword)
         {
